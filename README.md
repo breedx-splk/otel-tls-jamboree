@@ -14,8 +14,8 @@ wget https://github.com/signalfx/splunk-otel-collector/releases/download/v0.106.
 chmod 755 otelcol_darwin_arm64
 ```
 
-You'll need an ingest token (docs here). Copy one and paste it into a new file
-named `env.sh` that looks like this:
+You'll need an ingest token ([docs here](https://docs.splunk.com/observability/en/admin/authentication/authentication-tokens/org-tokens.html)). 
+Copy one and paste it into a new file named `env.sh` that looks like this:
 
 ```bash
 export SPLUNK_ACCESS_TOKEN=<your_token>
