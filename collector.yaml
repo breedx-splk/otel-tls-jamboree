@@ -1,0 +1,20 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+exporters:
+  otlphttp:
+    traces_endpoint: "https://ingest.${SPLUNK_REALM}.signalfx.com/v2/trace/otlp"
+    metrics_endpoint: "https://ingest.${SPLUNK_REALM}.signalfx.com/v2/datapoint/otlp"
+    headers:
+        X-SF-TOKEN: "${SPLUNK_ACCESS_TOKEN}"
+  logging/debug:
+    loglevel: debug
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [logging/debug, otlphttp]
+    metrics:
+      receivers: [otlp]
+      exporters: [logging/debug, otlphttp]
