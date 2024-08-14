@@ -55,6 +55,20 @@ module-mac = <big long mac string>
 ```
 $ sed -i '' "s%# .include fipsmodule.cnf%.include $(pwd)/ssl/fipsmodule.cnf%" ssl/openssl.cnf
 $ sed -i '' 's/# fips = fips_sect/fips = fips_sect/' ssl/openssl.cnf
+$ sed -i '' "s/# activate = 1/activate = 1/" ssl/openssl.cnf
+```
+5. Verify that the provider is available:
+```
+$ bin/openssl list --provider-path providers -provider fips -providers
+Providers:
+  default
+    name: OpenSSL Default Provider
+    version: 3.3.1
+    status: active
+  fips
+    name: OpenSSL FIPS Provider
+    version: 3.3.1
+    status: active
 ```
 
 ## Key generation
