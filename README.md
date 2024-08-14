@@ -53,7 +53,7 @@ module-mac = <big long mac string>
 4. Enable fips in the openssl config:
  (Note: this is macos sed syntax)
 ```
-$ sed -i '' 's/# .include fipsmodule.cnf/.include fipsmodule.cnf/' ssl/openssl.cnf
+$ sed -i '' "s%# .include fipsmodule.cnf%.include $(pwd)/ssl/fipsmodule.cnf%" ssl/openssl.cnf
 $ sed -i '' 's/# fips = fips_sect/fips = fips_sect/' ssl/openssl.cnf
 ```
 
