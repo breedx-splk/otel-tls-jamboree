@@ -22,3 +22,32 @@ export SPLUNK_ACCESS_TOKEN=<your_token>
 ```
 
 Now you'll need to generate a certificate for the collector.
+
+## openssl
+
+We're going to build openssl with fips support.
+
+1. Download openssl and unpack it:
+```
+wget https://github.com/openssl/openssl/releases/download/openssl-3.3.1/openssl-3.3.1.tar.gz
+tar -xvzf openssl-3.3.1.tar.gz
+cd openssl-3.3.1
+```
+2. Now we build it with fips enabled:
+ ```
+./Configure --prefix="$(pwd)/../openssl" enable-fips
+make install
+cd ../openssl
+```
+3. Verify that the fips config is there:
+```
+$ cat ssl/fipsmodule.cnf
+[fips_sect]
+activate = 1
+conditional-errors = 1
+security-checks = 1
+tls1-prf-ems-check = 1
+drbg-no-trunc-md = 1
+module-mac = <big long mac string>
+```
+
