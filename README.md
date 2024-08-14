@@ -74,3 +74,10 @@ Providers:
 ## Key generation
 
 tbd
+```
+$ bin/openssl req -provider fips \
+  -x509 -nodes -days 365 -newkey rsa:2048 \
+  -subj "/C=US/ST=Oregon/L=Portland/O=Splunk/OU=e/CN=splunk.com" \
+  -keyout ../collector.key \
+  -out ../collector.crt 
+```
