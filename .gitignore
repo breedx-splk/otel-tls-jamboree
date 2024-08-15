@@ -6,4 +6,6 @@ openssl-3.3.1.tar.gz
 openssl-3.3.1/
 openssl/
 amazon-corretto-17.jdk/
-out.txt
+collector.log
+petclinic.log
+amazon-corretto-17-x64-macos-jdk.tar.gz
