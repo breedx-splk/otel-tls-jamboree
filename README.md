@@ -7,7 +7,7 @@ Exploring java agent and collector TLS configurations.
 * This guide assumes the use of MacOS. Some commands and tools/urls will change
 on other operating systems.
 * You must have some standard tools installed (typically through homebrew). Make
-  sure you have curl, sed, wget, tar.
+  sure you have curl, sed, wget, tar, tee.
 
 ## openssl
 
@@ -64,7 +64,7 @@ To have the collector listen with TLS, we need to generate a FIPS compliant cert
 ```
 $ bin/openssl req -provider fips \
   -x509 -nodes -days 365 -newkey rsa:2048 \
-  -subj "/C=US/ST=Oregon/L=Portland/O=Splunk/OU=e/CN=splunk.com" \
+  -subj "/C=US/ST=Oregon/L=Portland/O=Splunk/OU=e/CN=localhost" \
   -keyout ../collector.key \
   -out ../collector.crt 
 ```
