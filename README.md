@@ -107,12 +107,6 @@ Copy one and paste it into a new file named `env.sh` that looks like this:
 export SPLUNK_ACCESS_TOKEN=<your_token>
 ```
 
-And then start the collector:
-
-```
-./collector.sh
-```
-
 ## JDK setup
 
 We are going to use the Amazon Coretto distribution of the JDK:
@@ -134,4 +128,21 @@ amazon-corretto-17.jdk/Contents/Home/bin/keytool -import \
 
 You will be prompted for the keystore password, which is the default: **changeit**. Literally type `changeit`.
 
-You will shown some details about the cert and then asked if you should trust it. Enter `yes`.
+You will be shown some details about the cert and then asked if you should trust it. Enter `yes`.
+
+## Runing the test
+
+You will need two terminals: one to run the collector and one to run the instrumented java application.
+First start the collector:
+
+```
+./collector.sh
+```
+
+and then in the other terminal start the petclinic java application:
+
+```
+./petclinic.sh
+```
+
+After a few seconds you should see some metrics and traces being logged. 
