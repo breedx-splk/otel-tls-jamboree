@@ -3,6 +3,7 @@ receivers:
     protocols:
       http:
         tls:
+          min_version: "1.3"
           cert_file: collector.crt
           key_file: collector.key
 exporters:
@@ -21,3 +22,6 @@ service:
     metrics:
       receivers: [otlp]
       exporters: [logging/debug, otlphttp]
+    logs:
+      receivers: [otlp]
+      exporters: [logging/debug]
