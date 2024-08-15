@@ -120,3 +120,17 @@ We are going to use the Amazon Coretto distribution of the JDK:
 $ wget https://corretto.aws/downloads/latest/amazon-corretto-17-x64-macos-jdk.tar.gz
 $ tar -xvzf amazon-corretto-17-x64-macos-jdk.tar.gz
 ```
+
+And now we need to add the collector's cert we generated (above) to the 
+java trust store:
+
+```
+amazon-corretto-17.jdk/Contents/Home/bin/keytool -import \
+  -alias collectorTLS \
+  -keystore amazon-corretto-17.jdk/Contents/Home/lib/security/cacerts \
+  -file collector.crt
+```
+
+You will be prompted for the keystore password, which is the default: **changeit**. Literally type `changeit`.
+
+You will shown some details about the cert and then asked if you should trust it. Enter `yes`.
