@@ -9,4 +9,4 @@ ${JAVA_HOME}/bin/java \
   -Dotel.exporter.otlp.endpoint=https://localhost:4318 \
   -Dotel.javaagent.debug=true \
   -Dotel.service.name=spring-petclinic-rest \
-  -jar lib/spring-petclinic-rest-3.2.1.jar 2>&1 | tee out.txt
+  -jar lib/spring-petclinic-rest-3.2.1.jar 2>&1 | tee petclinic.log
