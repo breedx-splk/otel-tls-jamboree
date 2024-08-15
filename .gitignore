@@ -1,2 +1,9 @@
 otelcol_darwin_arm64
 env.sh
+collector.crt
+collector.key
+openssl-3.3.1.tar.gz
+openssl-3.3.1/
+openssl/
+amazon-corretto-17.jdk/
+out.txt
