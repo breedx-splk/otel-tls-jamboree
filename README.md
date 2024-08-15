@@ -14,6 +14,14 @@ wget https://github.com/signalfx/splunk-otel-collector/releases/download/v0.106.
 chmod 755 otelcol_darwin_arm64
 ```
 
+Go ahead and check the hash to be super duper secure:
+```
+$ curl -qsL https://github.com/signalfx/splunk-otel-collector/releases/download/v0.106.1/checksums.txt | \
+  grep otelcol_darwin_arm64 && \
+  shasum -a 256 otelcol_darwin_arm64
+```
+This should show the same hash twice.
+
 You'll need an ingest token ([docs here](https://docs.splunk.com/observability/en/admin/authentication/authentication-tokens/org-tokens.html)). 
 Copy one and paste it into a new file named `env.sh` that looks like this:
 
