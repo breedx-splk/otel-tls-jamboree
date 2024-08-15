@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export SPLUNK_REALM=us0
+
 if [ -f env.sh ] ; then
     source env.sh
 else
@@ -12,4 +14,5 @@ if [ "" == "${SPLUNK_ACCESS_TOKEN}" ] ; then
   exit 1
 fi
 
-./otelcol_darwin_arm64 --config collector.yaml \
+./otelcol_darwin_arm64 --config collector.yaml | \
+    tee collector.log
