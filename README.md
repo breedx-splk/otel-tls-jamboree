@@ -20,7 +20,11 @@ $ curl -qsL https://github.com/signalfx/splunk-otel-collector/releases/download/
   grep otelcol_darwin_arm64 && \
   shasum -a 256 otelcol_darwin_arm64
 ```
-This should show the same hash twice.
+This should show the same hash twice:
+```
+c337727a41b976c6547b72738e238a1d8a6150777d065f2b5555f57229fbc74a  otelcol_darwin_arm64
+c337727a41b976c6547b72738e238a1d8a6150777d065f2b5555f57229fbc74a  otelcol_darwin_arm64
+```
 
 You'll need an ingest token ([docs here](https://docs.splunk.com/observability/en/admin/authentication/authentication-tokens/org-tokens.html)). 
 Copy one and paste it into a new file named `env.sh` that looks like this:
@@ -81,7 +85,7 @@ Providers:
 
 ## Key generation
 
-tbd
+To have the collector listen with TLS, we need to generate a certificate:
 ```
 $ bin/openssl req -provider fips \
   -x509 -nodes -days 365 -newkey rsa:2048 \
