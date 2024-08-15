@@ -57,6 +57,10 @@ Providers:
     version: 3.3.1
     status: active
 ```
+6. For curiousity, you can see what ciphers are available for TLS and FIPS:
+```
+$ bin/openssl ciphers -provider fips -v 'kRSA+FIPS:!TLSv1.3'
+```
 
 ## Key generation
 
@@ -129,6 +133,30 @@ amazon-corretto-17.jdk/Contents/Home/bin/keytool -import \
 You will be prompted for the keystore password, which is the default: **changeit**. Literally type `changeit`.
 
 You will be shown some details about the cert and then asked if you should trust it. Enter `yes`.
+
+### Configure BouncyCastle
+
+[BouncyCastle](https://www.bouncycastle.org/download/bouncy-castle-java/) provides a FIPS agreeable 
+crypto extension (JCE) for the JDK. We've included the most recent version in the lib dir
+of this repo. This will also be passed in the classpath to our test application.
+
+We first need to remove/disable the existing security providers that come with the Coretto JDK 
+(even though we think they are probably fine, we explicitly want to use BouncyCastle here).
+
+```
+$ sed -i '' 's/^security\.provider\./#security.provider/'  amazon-corretto-17.jdk/Contents/Home/conf/security/java.security
+```
+
+And now we need to configure the BouncyCastle provider:
+
+```
+$ cat << EOF >> amazon-corretto-17.jdk/Contents/Home/conf/security/java.security
+security.provider.1=org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider
+security.provider.2=org.bouncycastle.jsse.provider.BouncyCastleJsseProvider fips:BCFIPS
+security.provider.3=sun.security.provider.Sun
+EOF
+```
+
 
 ## Runing the test
 
