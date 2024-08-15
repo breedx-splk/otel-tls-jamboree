@@ -65,6 +65,7 @@ To have the collector listen with TLS, we need to generate a FIPS compliant cert
 $ bin/openssl req -provider fips \
   -x509 -nodes -days 365 -newkey rsa:2048 \
   -subj "/C=US/ST=Oregon/L=Portland/O=Splunk/OU=e/CN=localhost" \
+  -addext 'subjectAltName=DNS:localhost' \
   -keyout ../collector.key \
   -out ../collector.crt 
 ```
