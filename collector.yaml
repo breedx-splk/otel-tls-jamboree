@@ -2,6 +2,9 @@ receivers:
   otlp:
     protocols:
       http:
+        tls:
+          cert_file: collector.crt
+          key_file: collector.key
 exporters:
   otlphttp:
     traces_endpoint: "https://ingest.${SPLUNK_REALM}.signalfx.com/v2/trace/otlp"
@@ -9,7 +12,7 @@ exporters:
     headers:
         X-SF-TOKEN: "${SPLUNK_ACCESS_TOKEN}"
   logging/debug:
-    loglevel: debug
+    verbosity: detailed
 service:
   pipelines:
     traces:
