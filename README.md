@@ -186,3 +186,96 @@ and then in the other terminal start the petclinic java application:
 ```
 
 After a few seconds you should see some metrics and traces being logged. 
+
+If you want to verify the TLS configuration of the running collector, we can 
+use openssl for that again:
+
+```
+$ ./openssl/bin/openssl s_client -connect localhost:4318
+Connecting to 127.0.0.1
+CONNECTED(00000005)
+Can't use SSL_get_servername
+depth=0 C=US, ST=Oregon, L=Portland, O=Splunk, OU=e, CN=localhost
+verify error:num=18:self-signed certificate
+verify return:1
+depth=0 C=US, ST=Oregon, L=Portland, O=Splunk, OU=e, CN=localhost
+verify return:1
+---
+Certificate chain
+ 0 s:C=US, ST=Oregon, L=Portland, O=Splunk, OU=e, CN=localhost
+   i:C=US, ST=Oregon, L=Portland, O=Splunk, OU=e, CN=localhost
+   a:PKEY: rsaEncryption, 2048 (bit); sigalg: RSA-SHA256
+   v:NotBefore: Aug 15 17:15:42 2024 GMT; NotAfter: Aug 15 17:15:42 2025 GMT
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIDuzCCAqOgAwIBAgIUK591cP5LQWdGG9IKowzMwiGELwAwDQYJKoZIhvcNAQEL
+BQAwYjELMAkGA1UEBhMCVVMxDzANBgNVBAgMBk9yZWdvbjERMA8GA1UEBwwIUG9y
+dGxhbmQxDzANBgNVBAoMBlNwbHVuazEKMAgGA1UECwwBZTESMBAGA1UEAwwJbG9j
+YWxob3N0MB4XDTI0MDgxNTE3MTU0MloXDTI1MDgxNTE3MTU0MlowYjELMAkGA1UE
+BhMCVVMxDzANBgNVBAgMBk9yZWdvbjERMA8GA1UEBwwIUG9ydGxhbmQxDzANBgNV
+BAoMBlNwbHVuazEKMAgGA1UECwwBZTESMBAGA1UEAwwJbG9jYWxob3N0MIIBIjAN
+BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAySTAYHyVdNYthNlyegxgwait6iGC
+2PFyGzS+Jf4/9iNBFICZdOPYIMyQDGN1OQLHAIVqcNVg/ND/MmBPOSCQqvkbr4Gc
+k7arT+1pcq4dV4SnbcfpxRnpAykVjfexbIii9obSQ1DwGeMeBOBfkMdTRhv2t2nV
+udrRnsPIeGNdKUqm+klrls5ENr8b2tzVnNtsdz2Fo0StHwaUI+2nsveqYVUirpMj
+GGEZoBQCwsrZt3T9gvahbtcMsqNLbxPmIFzwgF9krk7BsCT2hRvcauJW5JGoTHGb
+dF+r6WRgtj8n2FJyMRTXQ5364X4K0xWafpHt2+3uuEZyAQ/xdKTEPdQahwIDAQAB
+o2kwZzAdBgNVHQ4EFgQUqIkNgLCRzO90zARU4cdFWo+ypkEwHwYDVR0jBBgwFoAU
+qIkNgLCRzO90zARU4cdFWo+ypkEwDwYDVR0TAQH/BAUwAwEB/zAUBgNVHREEDTAL
+gglsb2NhbGhvc3QwDQYJKoZIhvcNAQELBQADggEBADIz5N90eweFDvz6wHZnJh6/
+pcuhCV34q/lzOQefzDYToV6GoBq0vvIcMJ/iSKn/y61d1uaXs2pzA6Tj7VVSJqK0
+Keic6MC/62CjQC7RyV5xDZ9/m74g8s4bDD+HMaowZDD0qJqRcFv6TbQnP1L8aIVK
+s/m9/iOLCnzVtmmWDpcxNroi4GZL5UpvYlfBvzVBg4uPqzV9t9yGsRcDtmpglME8
+T//0YqUOGEU8tKIEuab17ZLlxE+XnG2d7fJBw28DmpBPKWlgJ0bbkaHS4Z9qjia2
+ckhGhtbW6fJqskfUFn3j94k8UbT4FWFChmnzdiZZ6vkP7uoDG9w74oNvfLOcBMY=
+-----END CERTIFICATE-----
+subject=C=US, ST=Oregon, L=Portland, O=Splunk, OU=e, CN=localhost
+issuer=C=US, ST=Oregon, L=Portland, O=Splunk, OU=e, CN=localhost
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: RSA-PSS
+Server Temp Key: X25519, 253 bits
+---
+SSL handshake has read 1499 bytes and written 363 bytes
+Verification error: self-signed certificate
+---
+New, TLSv1.3, Cipher is TLS_AES_128_GCM_SHA256
+Server public key is 2048 bit
+This TLS version forbids renegotiation.
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+Early data was not sent
+Verify return code: 18 (self-signed certificate)
+---
+---
+Post-Handshake New Session Ticket arrived:
+SSL-Session:
+    Protocol  : TLSv1.3
+    Cipher    : TLS_AES_128_GCM_SHA256
+    Session-ID: D459FB0735B71D1D7013146C32F972D4E0BF14AA5FE675F973C3C7187B4B1D33
+    Session-ID-ctx:
+    Resumption PSK: 4FDE0376F9D8D2626D61DA5036799C2FC530F980644E6833464053EDEB82B9CF
+    PSK identity: None
+    PSK identity hint: None
+    SRP username: None
+    TLS session ticket lifetime hint: 604800 (seconds)
+    TLS session ticket:
+    0000 - 01 c0 1f ff 0e 7c e8 f5-41 8d f2 33 fe 5d 09 74   .....|..A..3.].t
+    0010 - e0 11 57 df 15 2a c8 cc-3d 67 75 27 22 79 74 df   ..W..*..=gu'"yt.
+    0020 - ce a6 c7 23 31 70 65 18-47 b2 03 6e 24 52 b5 25   ...#1pe.G..n$R.%
+    0030 - 1b 6f ee 10 ac be e9 b1-de 85 95 9e 6d e2 5c f1   .o..........m.\.
+    0040 - ca 5e 8b 0f e6 b8 e5 5c-e8 ab 73 ee cd 37 e3 e0   .^.....\..s..7..
+    0050 - 5d b6 f4 42 7c 98 7a c6-19 96 d8 c8 f6 28 8c 32   ]..B|.z......(.2
+    0060 - 18 e8 ef 28 b8 e7 27 67-5e                        ...(..'g^
+
+    Start Time: 1723832959
+    Timeout   : 7200 (sec)
+    Verify return code: 18 (self-signed certificate)
+    Extended master secret: no
+    Max Early Data: 0
+---
+read R BLOCK
+```
