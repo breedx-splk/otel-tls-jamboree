@@ -9,7 +9,7 @@ on other operating systems.
 * You must have some standard tools installed (typically through homebrew). Make
   sure you have curl, sed, wget, tar, tee.
 
-## openssl
+## OpenSSL
 
 We're going to build a custom OpenSSL with FIPS support. This will allow us to
 create compliant certs.
