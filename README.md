@@ -144,7 +144,14 @@ We first need to remove/disable the existing security providers that come with t
 (even though we think they are probably fine, we explicitly want to use BouncyCastle here).
 
 ```
-$ sed -i '' 's/^security\.provider\./#security.provider/'  amazon-corretto-17.jdk/Contents/Home/conf/security/java.security
+$ sed -i '' 's/^security\.provider\./#security.provider/' \
+  amazon-corretto-17.jdk/Contents/Home/conf/security/java.security
+```
+
+Now we change the `KeyManagerFactory` to PKIX:
+```
+$ sed -i '' 's/^ssl.KeyManagerFactory.algorithm=SunX509/ssl.KeyManagerFactory.algorithm=PKIX/' \
+  amazon-corretto-17.jdk/Contents/Home/conf/security/java.security
 ```
 
 And now we need to configure the BouncyCastle provider:
@@ -154,9 +161,14 @@ $ cat << EOF >> amazon-corretto-17.jdk/Contents/Home/conf/security/java.security
 security.provider.1=org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider
 security.provider.2=org.bouncycastle.jsse.provider.BouncyCastleJsseProvider fips:BCFIPS
 security.provider.3=sun.security.provider.Sun
+security.provider.4=SunJCE
+security.provider.5=SunJSSE
+security.provider.6=SunEC
+security.provider.7=SunRsaSign
 EOF
 ```
 
+Note: We have kept 5 of the Sun-based providers. The agent fails for different reasons without these.
 
 ## Runing the test
 
