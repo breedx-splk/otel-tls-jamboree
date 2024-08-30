@@ -161,10 +161,6 @@ $ cat << EOF >> amazon-corretto-17.jdk/Contents/Home/conf/security/java.security
 security.provider.1=org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider
 security.provider.2=org.bouncycastle.jsse.provider.BouncyCastleJsseProvider fips:BCFIPS
 security.provider.3=sun.security.provider.Sun
-security.provider.4=SunJCE
-security.provider.5=SunJSSE
-security.provider.6=SunEC
-security.provider.7=SunRsaSign
 EOF
 ```
 
